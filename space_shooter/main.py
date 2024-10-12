@@ -1,3 +1,5 @@
+import os
+
 import pygame
 from constants import WINDOW_HEIGHT, WINDOW_WIDTH
 
@@ -10,7 +12,8 @@ running = True
 surface = pygame.Surface((100, 200))
 surface.fill("seagreen")
 
-player_surface = pygame.image.load("images/player.png")
+
+player_surface = pygame.image.load(os.path.join("images", "player.png")).convert_alpha()
 
 while running:
     # event loop
