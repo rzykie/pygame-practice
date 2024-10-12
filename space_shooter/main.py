@@ -15,6 +15,8 @@ surface.fill("seagreen")
 
 player_surface = pygame.image.load(os.path.join("images", "player.png")).convert_alpha()
 player_frect = player_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+player_direction = -1
+
 
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 star_positions = [
@@ -26,9 +28,7 @@ meteor_surface = pygame.image.load(os.path.join("images", "meteor.png")).convert
 meteor_frect = meteor_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
 
 laser_surface = pygame.image.load(os.path.join("images", "laser.png")).convert_alpha()
-laser_frect = laser_surface.get_frect(
-    bottomleft=(WINDOW_WIDTH - 1260, WINDOW_HEIGHT - 20)
-)
+laser_frect = laser_surface.get_frect(bottomleft=(20, WINDOW_HEIGHT - 20))
 
 while running:
     # event loop
@@ -41,10 +41,10 @@ while running:
     for position in star_positions:
         display_surface.blit(star_surface, position)
 
-    if player_frect.right < WINDOW_WIDTH:
-        player_frect.left += 0.2
-    else:
-        player_frect.left -= 0.1
+    player_frect.x += player_direction * 0.8
+    if player_frect.right > WINDOW_WIDTH or player_frect.left < 0:
+        player_direction *= -1
+
     display_surface.blit(player_surface, player_frect)
 
     display_surface.blit(meteor_surface, meteor_frect)
