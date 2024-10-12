@@ -14,6 +14,8 @@ surface.fill("seagreen")
 
 
 player_surface = pygame.image.load(os.path.join("images", "player.png")).convert_alpha()
+player_frect = player_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 star_positions = [
     (random.randint(0, WINDOW_WIDTH), random.randint(0, WINDOW_HEIGHT))
@@ -30,7 +32,7 @@ while running:
     for position in star_positions:
         display_surface.blit(star_surface, position)
 
-    display_surface.blit(player_surface, (100, 150))
+    display_surface.blit(player_surface, player_frect)
 
     pygame.display.update()
 
