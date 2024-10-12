@@ -10,6 +10,8 @@ running = True
 surface = pygame.Surface((100, 200))
 surface.fill("seagreen")
 
+player_surface = pygame.image.load("images/player.png")
+
 while running:
     # event loop
     for event in pygame.event.get():
@@ -17,7 +19,7 @@ while running:
             running = False
 
     display_surface.fill("darkseagreen1")
-    display_surface.blit(surface, (100, 150))
+    display_surface.blit(player_surface, (100, 150))
     pygame.display.update()
 
 pygame.quit()
