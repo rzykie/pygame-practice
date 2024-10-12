@@ -21,6 +21,15 @@ star_positions = [
     (random.randint(0, WINDOW_WIDTH), random.randint(0, WINDOW_HEIGHT))
     for _ in range(20)
 ]
+
+meteor_surface = pygame.image.load(os.path.join("images", "meteor.png")).convert_alpha()
+meteor_frect = meteor_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+
+laser_surface = pygame.image.load(os.path.join("images", "laser.png")).convert_alpha()
+laser_frect = laser_surface.get_frect(
+    bottomleft=(WINDOW_WIDTH - 1260, WINDOW_HEIGHT - 20)
+)
+
 while running:
     # event loop
     for event in pygame.event.get():
@@ -32,7 +41,15 @@ while running:
     for position in star_positions:
         display_surface.blit(star_surface, position)
 
+    if player_frect.right < WINDOW_WIDTH:
+        player_frect.left += 0.2
+    else:
+        player_frect.left -= 0.1
     display_surface.blit(player_surface, player_frect)
+
+    display_surface.blit(meteor_surface, meteor_frect)
+
+    display_surface.blit(laser_surface, laser_frect)
 
     pygame.display.update()
 
