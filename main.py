@@ -4,6 +4,7 @@ from constants import WINDOW_HEIGHT, WINDOW_WIDTH
 pygame.init()
 
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption("space shooter")
 running = True
 while True:
     # event loop
