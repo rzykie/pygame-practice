@@ -45,6 +45,8 @@ while running:
     # INPUT SECTION
     # pygame.mouse.get_pos()
     keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+        print("fire laser")
     player_direction.x = int(keys[pygame.K_d]) - int(keys[pygame.K_a])
     player_direction.y = int(keys[pygame.K_s]) - int(keys[pygame.K_w])
     # if keys[pygame.K_d]:
@@ -55,7 +57,7 @@ while running:
         player_direction.normalize() if player_direction else player_direction
     )
     player_frect.center += player_direction * player_speed * delta_time
-    print(player_direction)
+    # print(player_direction)
     display_surface.fill("darkgray")
 
     for position in star_positions:
