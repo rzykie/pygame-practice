@@ -16,8 +16,8 @@ surface.fill("seagreen")
 
 player_surface = pygame.image.load(os.path.join("images", "player.png")).convert_alpha()
 player_frect = player_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
-player_direction = pygame.math.Vector2(1, 1)
-player_speed = 200
+player_direction = pygame.math.Vector2()
+player_speed = 300
 
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 star_positions = [
@@ -37,10 +37,25 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        #     print(1)
+        # if event.type == pygame.MOUSEMOTION:
+        #     player_frect.center = event.pos
 
-        if event.type == pygame.MOUSEMOTION:
-            print(event.pos)
-
+    # INPUT SECTION
+    # pygame.mouse.get_pos()
+    keys = pygame.key.get_pressed()
+    player_direction.x = int(keys[pygame.K_d]) - int(keys[pygame.K_a])
+    player_direction.y = int(keys[pygame.K_s]) - int(keys[pygame.K_w])
+    # if keys[pygame.K_d]:
+    #     player_direction.x = 1
+    # else:
+    #     player_direction.x = 0
+    player_direction = (
+        player_direction.normalize() if player_direction else player_direction
+    )
+    player_frect.center += player_direction * player_speed * delta_time
+    print(player_direction)
     display_surface.fill("darkgray")
 
     for position in star_positions:
