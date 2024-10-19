@@ -38,6 +38,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        if event.type == pygame.MOUSEMOTION:
+            print(event.pos)
+
     display_surface.fill("darkgray")
 
     for position in star_positions:
@@ -47,11 +50,12 @@ while running:
 
     display_surface.blit(laser_surface, laser_frect)
 
-    player_frect.center += player_direction * player_speed * delta_time
-    if player_frect.bottom >= WINDOW_HEIGHT or player_frect.top <= 0:
-        player_direction.y *= -1
-    if player_frect.right >= WINDOW_WIDTH or player_frect.left <= 0:
-        player_direction.x *= -1
+    # dvd logo movement
+    # player_frect.center += player_direction * player_speed * delta_time
+    # if player_frect.bottom >= WINDOW_HEIGHT or player_frect.top <= 0:
+    #     player_direction.y *= -1
+    # if player_frect.right >= WINDOW_WIDTH or player_frect.left <= 0:
+    #     player_direction.x *= -1
     # if player_frect.right > WINDOW_WIDTH or player_frect.left < 0:
     #     player_direction *= -1
 
