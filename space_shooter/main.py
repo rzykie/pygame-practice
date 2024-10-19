@@ -16,8 +16,8 @@ surface.fill("seagreen")
 
 player_surface = pygame.image.load(os.path.join("images", "player.png")).convert_alpha()
 player_frect = player_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
-player_direction = pygame.math.Vector2(1, 0)
-player_speed = 10
+player_direction = pygame.math.Vector2(1, 1)
+player_speed = 200
 
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 star_positions = [
@@ -32,8 +32,7 @@ laser_surface = pygame.image.load(os.path.join("images", "laser.png")).convert_a
 laser_frect = laser_surface.get_frect(bottomleft=(20, WINDOW_HEIGHT - 20))
 
 while running:
-    delta_time = clock.tick()
-    print(clock.get_fps())
+    delta_time = clock.tick(60) / 1000
     # event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -48,8 +47,11 @@ while running:
 
     display_surface.blit(laser_surface, laser_frect)
 
-    player_frect.center += player_direction * player_speed
-
+    player_frect.center += player_direction * player_speed * delta_time
+    if player_frect.bottom > WINDOW_HEIGHT or player_frect.top < 0:
+        player_direction.y *= -1
+    if player_frect.right > WINDOW_WIDTH or player_frect.left < 0:
+        player_direction.x *= -1
     # if player_frect.right > WINDOW_WIDTH or player_frect.left < 0:
     #     player_direction *= -1
 
