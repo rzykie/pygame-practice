@@ -45,7 +45,9 @@ while running:
     # INPUT SECTION
     # pygame.mouse.get_pos()
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
+    recent_key = pygame.key.get_just_pressed()
+    # breakpoint()
+    if recent_key[pygame.K_SPACE]:
         print("fire laser")
     player_direction.x = int(keys[pygame.K_d]) - int(keys[pygame.K_a])
     player_direction.y = int(keys[pygame.K_s]) - int(keys[pygame.K_w])
