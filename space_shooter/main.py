@@ -73,10 +73,6 @@ while running:
     for position in star_positions:
         display_surface.blit(star_surface, position)
 
-    display_surface.blit(meteor_surface, meteor_frect)
-
-    display_surface.blit(laser_surface, laser_frect)
-
     all_sprites.draw(display_surface)
 
     pygame.display.update()
