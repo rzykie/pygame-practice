@@ -63,12 +63,17 @@ meteor_frect = meteor_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT 
 laser_surface = pygame.image.load(os.path.join("images", "laser.png")).convert_alpha()
 laser_frect = laser_surface.get_frect(bottomleft=(20, WINDOW_HEIGHT - 20))
 
+# custom event -> meteor event
+meteor_event = pygame.event.custom_type()
+pygame.time.set_timer(meteor_event, 500)
 while running:
     delta_time = clock.tick(60) / 1000
     # event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == meteor_event:
+            print("create meteor")
         # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
         #     print(1)
         # if event.type == pygame.MOUSEMOTION:
