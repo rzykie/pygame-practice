@@ -30,6 +30,15 @@ class Player(pygame.sprite.Sprite):
             print("fire laser")
 
 
+class Star(pygame.sprite.Sprite):
+    def __init__(self, groups, surface):
+        super().__init__(groups)
+        self.image = surface
+        self.rect = self.image.get_frect(
+            center=(random.randint(0, WINDOW_WIDTH), random.randint(0, WINDOW_HEIGHT))
+        )
+
+
 pygame.init()
 
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -41,13 +50,12 @@ surface = pygame.Surface((100, 200))
 surface.fill("seagreen")
 
 all_sprites = pygame.sprite.Group()
-player = Player(all_sprites)
 
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
-star_positions = [
-    (random.randint(0, WINDOW_WIDTH), random.randint(0, WINDOW_HEIGHT))
-    for _ in range(20)
-]
+for i in range(20):
+    Star(all_sprites, star_surface)
+player = Player(all_sprites)
+
 
 meteor_surface = pygame.image.load(os.path.join("images", "meteor.png")).convert_alpha()
 meteor_frect = meteor_surface.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
@@ -65,13 +73,9 @@ while running:
         #     print(1)
         # if event.type == pygame.MOUSEMOTION:
         #     player_frect.center = event.pos
-
     all_sprites.update(delta_time)
 
     display_surface.fill("darkgray")
-
-    for position in star_positions:
-        display_surface.blit(star_surface, position)
 
     all_sprites.draw(display_surface)
 
