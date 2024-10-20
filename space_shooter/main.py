@@ -3,6 +3,7 @@ import random
 import pygame
 from constants import WINDOW_HEIGHT, WINDOW_WIDTH
 from random import uniform
+from typing import List
 
 
 class Player(pygame.sprite.Sprite):
@@ -68,7 +69,7 @@ class Laser(pygame.sprite.Sprite):
 
 
 class Meteor(pygame.sprite.Sprite):
-    def __init__(self, groups, surface, position):
+    def __init__(self, groups: List[tuple], surface, position):
         super().__init__(groups)
         self.image = surface
         self.rect = self.image.get_frect(center=position)
@@ -93,6 +94,7 @@ clock = pygame.time.Clock()
 
 # import section
 all_sprites = pygame.sprite.Group()
+meteor_sprites = pygame.sprite.Group()
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 for i in range(20):
     Star(all_sprites, star_surface)
@@ -103,7 +105,7 @@ player = Player(all_sprites)
 
 # custom event -> meteor event
 meteor_event = pygame.event.custom_type()
-pygame.time.set_timer(meteor_event, 1000)
+pygame.time.set_timer(meteor_event, 50)
 while running:
     delta_time = clock.tick(60) / 1000
     # event loop
@@ -114,9 +116,17 @@ while running:
             meteor_position_1, meteor_position_2 = random.randint(
                 0, WINDOW_WIDTH
             ), random.randint(-200, -100)
-            Meteor(all_sprites, meteor_surface, (meteor_position_1, meteor_position_2))
+            Meteor(
+                (all_sprites, meteor_sprites),
+                meteor_surface,
+                (meteor_position_1, meteor_position_2),
+            )
 
     all_sprites.update(delta_time)
+
+    meteor_collided = pygame.sprite.spritecollide(player, meteor_sprites, True)
+    if meteor_collided:
+        print("collided")
 
     display_surface.fill("darkgray")
 
