@@ -2,6 +2,7 @@ import os
 import random
 import pygame
 from constants import WINDOW_HEIGHT, WINDOW_WIDTH
+from random import uniform
 
 
 class Player(pygame.sprite.Sprite):
@@ -72,12 +73,15 @@ class Meteor(pygame.sprite.Sprite):
         self.image = surface
         self.rect = self.image.get_frect(center=position)
 
-        self.meteor_time = 0
+        self.start_time = pygame.time.get_ticks()
+        self.lifetime = 3000
+        self.direction = pygame.math.Vector2(uniform(-0.5, 0.5), 1)
+        self.meteor_speed = random.randint(400, 500)
 
-    def meteor_timer(self):
-        current_time = pygame.time.get_ticks()
-        if current_time - self.laser_shoot_time >= self.cooldown_duration:
-            self.can_shoot = True
+    def update(self, delta_time):
+        self.rect.center += self.direction * self.meteor_speed * delta_time
+        if pygame.time.get_ticks() - self.start_time >= self.lifetime:
+            self.kill()
 
 
 # General setup
@@ -109,7 +113,7 @@ while running:
         if event.type == meteor_event:
             meteor_position_1, meteor_position_2 = random.randint(
                 0, WINDOW_WIDTH
-            ), random.randint(0, WINDOW_HEIGHT)
+            ), random.randint(-200, -100)
             Meteor(all_sprites, meteor_surface, (meteor_position_1, meteor_position_2))
 
     all_sprites.update(delta_time)
