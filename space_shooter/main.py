@@ -106,6 +106,9 @@ all_sprites = pygame.sprite.Group()
 meteor_sprites = pygame.sprite.Group()
 laser_sprites = pygame.sprite.Group()
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
+font = pygame.font.Font(os.path.join("fonts", "Oxanium-Bold.ttf"), 20)
+text_surface = font.render("Space Shooter", True, "black")
+
 for i in range(20):
     Star(all_sprites, star_surface)
 laser_surface = pygame.image.load(os.path.join("images", "laser.png")).convert_alpha()
@@ -115,6 +118,7 @@ player = Player(all_sprites)
 # custom event -> meteor event
 meteor_event = pygame.event.custom_type()
 pygame.time.set_timer(meteor_event, 500)
+
 while running:
     delta_time = clock.tick(60) / 1000
     # event loop
@@ -136,7 +140,9 @@ while running:
     display_surface.fill("darkgray")
 
     all_sprites.draw(display_surface)
-
+    display_surface.blit(
+        text_surface, (WINDOW_WIDTH / 2 - text_surface.get_width() / 2, 10)
+    )
     pygame.display.update()
 
 pygame.quit()
