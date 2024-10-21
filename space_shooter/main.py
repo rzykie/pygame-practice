@@ -94,6 +94,13 @@ def collisions():
             laser.kill()
 
 
+def display_score():
+    current_time = pygame.time.get_ticks()
+    text_surface = font.render(str(current_time), True, "black")
+    text_rect = text_surface.get_frect(midbottom=(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50))
+    display_surface.blit(text_surface, text_rect)
+
+
 # General setup
 pygame.init()
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -107,7 +114,7 @@ meteor_sprites = pygame.sprite.Group()
 laser_sprites = pygame.sprite.Group()
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
 font = pygame.font.Font(os.path.join("fonts", "Oxanium-Bold.ttf"), 20)
-text_surface = font.render("Space Shooter", True, "black")
+
 
 for i in range(20):
     Star(all_sprites, star_surface)
@@ -137,12 +144,10 @@ while running:
 
     all_sprites.update(delta_time)
     collisions()
-    display_surface.fill("darkgray")
+    display_surface.fill("#6415B8")
 
+    display_score()
     all_sprites.draw(display_surface)
-    display_surface.blit(
-        text_surface, (WINDOW_WIDTH / 2 - text_surface.get_width() / 2, 10)
-    )
     pygame.display.update()
 
 pygame.quit()
