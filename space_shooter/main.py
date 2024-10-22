@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
         ).convert_alpha()
         self.rect = self.image.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
         self.direction = pygame.math.Vector2()
-        self.speed = 500
+        self.speed = 800
 
         # cooldown
         self.can_shoot = True
@@ -95,10 +95,14 @@ def collisions():
 
 
 def display_score():
-    current_time = pygame.time.get_ticks()
+    current_time = pygame.time.get_ticks() // 100
     text_surface = font.render(str(current_time), True, "black")
     text_rect = text_surface.get_frect(midbottom=(WINDOW_WIDTH / 2, WINDOW_HEIGHT - 50))
+    padded_text_rect = text_rect.inflate(20, 12)
     display_surface.blit(text_surface, text_rect)
+    pygame.draw.rect(
+        display_surface, "red", padded_text_rect.move(0, -8), 5, 10, 5, 5, 5, 5
+    )
 
 
 # General setup
@@ -113,7 +117,7 @@ all_sprites = pygame.sprite.Group()
 meteor_sprites = pygame.sprite.Group()
 laser_sprites = pygame.sprite.Group()
 star_surface = pygame.image.load(os.path.join("images", "star.png")).convert_alpha()
-font = pygame.font.Font(os.path.join("fonts", "Oxanium-Bold.ttf"), 20)
+font = pygame.font.Font(os.path.join("fonts", "Oxanium-Bold.ttf"), 40)
 
 
 for i in range(20):
@@ -146,8 +150,13 @@ while running:
     collisions()
     display_surface.fill("#6415B8")
 
-    display_score()
     all_sprites.draw(display_surface)
+    display_score()
+
+    # draw test
+    # pygame.draw.line(display_surface, "black", (0, 0), player.rect.center, 5)
+    # pygame.draw.rect(display_surface, "red", player.rect, 5, 5)
+
     pygame.display.update()
 
 pygame.quit()
