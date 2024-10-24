@@ -9,9 +9,10 @@ from typing import List
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
-        self.image = pygame.image.load(
+        self.original_surface = pygame.image.load(
             os.path.join("images", "player.png")
         ).convert_alpha()
+        self.image = self.original_surface
         self.rect = self.image.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
         self.direction = pygame.math.Vector2()
         self.speed = 800
@@ -79,27 +80,43 @@ class Laser(pygame.sprite.Sprite):
 class Meteor(pygame.sprite.Sprite):
     def __init__(self, groups: List[tuple], surface, position):
         super().__init__(groups)
-        self.image = surface
+        self.original_surface = surface
+        self.image = self.original_surface
         self.rect = self.image.get_frect(center=position)
+        self.rotation_speed = random.randint(80, 120)
+        self.rotation = 0
 
         self.start_time = pygame.time.get_ticks()
         self.lifetime = 3000
         self.direction = pygame.math.Vector2(uniform(-0.5, 0.5), 1)
         self.meteor_speed = random.randint(400, 500)
 
+        self.meteor_mask = pygame.mask.from_surface(self.image)
+
     def update(self, delta_time):
         self.rect.center += self.direction * self.meteor_speed * delta_time
         if pygame.time.get_ticks() - self.start_time >= self.lifetime:
             self.kill()
 
+        # meteor rotation
+        self.rotation += self.rotation_speed * delta_time
+        self.image = pygame.transform.rotozoom(self.original_surface, self.rotation, 1)
+        self.rect = self.image.get_frect(center=self.rect.center)
+
 
 def collisions():
-    pygame.sprite.spritecollide(
+    global running
+
+    collision_sprites = pygame.sprite.spritecollide(
         player, meteor_sprites, True, pygame.sprite.collide_mask
     )
+    if collision_sprites:
+        running = False
 
     for laser in laser_sprites:
-        collided_laser = pygame.sprite.spritecollide(laser, meteor_sprites, True)
+        collided_laser = pygame.sprite.spritecollide(
+            laser, meteor_sprites, True, pygame.sprite.collide_mask
+        )
         if collided_laser:
             laser.kill()
 
