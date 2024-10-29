@@ -46,6 +46,7 @@ class Player(pygame.sprite.Sprite):
             Laser((all_sprites, laser_sprites), laser_surface, self.rect.midtop)
             self.can_shoot = False
             self.laser_shoot_time = pygame.time.get_ticks()
+            laser_sound.play()
 
         self.laser_timer()
 
@@ -141,6 +142,7 @@ def collisions():
         if collided_laser:
             laser.kill()
             AnimatedExplosion(all_sprites, laser.rect.midtop, explosion_frames)
+            explosion_sound.play()
 
 
 def display_score():
@@ -172,6 +174,13 @@ explosion_frames = [
     for i in range(21)
 ]
 
+laser_sound = pygame.mixer.Sound(os.path.join("audio", "laser.wav"))
+laser_sound.set_volume(0.3)
+explosion_sound = pygame.mixer.Sound(os.path.join("audio", "explosion.wav"))
+# damage_sound = pygame.mixer.Sound(os.path.join("audio", "damage.ogg"))
+game_music = pygame.mixer.Sound(os.path.join("audio", "game_music.wav"))
+game_music.play(loops=-1)
+game_music.set_volume(0.1)
 
 for i in range(20):
     Star(all_sprites, star_surface)
