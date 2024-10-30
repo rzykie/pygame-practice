@@ -26,6 +26,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+
             # update
             self.all_sprites.update(delta_time)
 
