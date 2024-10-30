@@ -1,8 +1,10 @@
 import os
+import random
 
 import pygame
-from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
 from player import Player
+from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
+from sprites import *
 
 
 class Game:
@@ -18,6 +20,13 @@ class Game:
 
         # player
         self.player = Player((400, 300), self.all_sprites)
+
+        for _ in range(6):
+            posx, posy = random.randint(0, WINDOW_WIDTH), random.randint(
+                0, WINDOW_HEIGHT
+            )
+            width, height = random.randint(60, 100), random.randint(50, 100)
+            CollisionSprite((posx, posy), (width, height), self.all_sprites)
 
     def run(self):
         while self.running:
