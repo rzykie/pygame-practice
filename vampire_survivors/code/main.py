@@ -17,16 +17,21 @@ class Game:
 
         # groups
         self.all_sprites = pygame.sprite.Group()
+        self.collision_sprites = pygame.sprite.Group()
 
         # player
-        self.player = Player((400, 300), self.all_sprites)
+        self.player = Player((400, 300), self.all_sprites, self.collision_sprites)
 
         for _ in range(6):
             posx, posy = random.randint(0, WINDOW_WIDTH), random.randint(
                 0, WINDOW_HEIGHT
             )
             width, height = random.randint(60, 100), random.randint(50, 100)
-            CollisionSprite((posx, posy), (width, height), self.all_sprites)
+            CollisionSprite(
+                (posx, posy),
+                (width, height),
+                (self.all_sprites, self.collision_sprites),
+            )
 
     def run(self):
         while self.running:
