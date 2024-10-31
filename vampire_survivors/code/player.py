@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
         self.speed = 800
         self.collision_sprites = collision_sprites
+        self.hitbox_rectangle = self.rect.inflate(-60, -5)
 
         # mask
         self.player_mask = pygame.mask.from_surface(self.image)
@@ -35,26 +36,26 @@ class Player(pygame.sprite.Sprite):
         )
 
     def movement(self, delta_time):
-        self.rect.x += self.direction.x * self.speed * delta_time
+        self.hitbox_rectangle.x += self.direction.x * self.speed * delta_time
         self.collision("horizontal")
-        self.rect.y += self.direction.y * self.speed * delta_time
+        self.hitbox_rectangle.y += self.direction.y * self.speed * delta_time
         self.collision("vertical")
+        self.rect.center = self.hitbox_rectangle.center
 
     def collision(self, direction):
         for sprite in self.collision_sprites:
-            if sprite.rect.colliderect(self.rect):
+            if sprite.rect.colliderect(self.hitbox_rectangle):
                 if direction == "horizontal":
                     if self.direction.x > 0:
-                        self.rect.right = sprite.rect.left
+                        self.hitbox_rectangle.right = sprite.rect.left
                     if self.direction.x < 0:
-                        self.rect.left = sprite.rect.right
+                        self.hitbox_rectangle.left = sprite.rect.right
                     self.direction.x = 0
                 if direction == "vertical":
                     if self.direction.y > 0:
-                        self.rect.bottom = sprite.rect.top
+                        self.hitbox_rectangle.bottom = sprite.rect.top
                     if self.direction.y < 0:
-                        self.rect.top = sprite.rect.bottom
-                #     self.direction.y = 0
+                        self.hitbox_rectangle.top = sprite.rect.bottom
 
     def update(self, delta_time):
         self.input()
