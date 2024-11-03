@@ -4,7 +4,7 @@ import random
 import pygame
 from player import Player
 from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
-from sprites import *
+from sprites import CollisionSprite, GroundSprite
 from pytmx.util_pygame import load_pygame
 
 
@@ -55,13 +55,20 @@ class Game:
         tilemap = load_pygame(
             os.path.join("vampire_survivors", "data", "maps", "world.tmx")
         )
+
+        for ground_x, ground_y, ground_image in tilemap.get_layer_by_name(
+            "Ground"
+        ).tiles():
+            GroundSprite(
+                (ground_x * TILE_SIZE, ground_y * TILE_SIZE),
+                ground_image,
+                self.all_sprites,
+            )
+
         for tile in tilemap.get_layer_by_name("Objects"):
             CollisionSprite(
                 (tile.x, tile.y), tile.image, (self.all_sprites, self.collision_sprites)
             )
-            # print(tile.x)
-            # print(tile.y)
-            # print(tile.image)
 
 
 if __name__ == "__main__":
