@@ -5,6 +5,7 @@ import pygame
 from player import Player
 from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
 from sprites import *
+from pytmx.util_pygame import load_pygame
 
 
 class Game:
@@ -19,6 +20,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
 
+        self.tilemap_setup()
         # player
         self.player = Player((400, 300), self.all_sprites, self.collision_sprites)
 
@@ -48,6 +50,12 @@ class Game:
             self.display_surface.fill((0, 0, 0))
             self.all_sprites.draw(self.display_surface)
             pygame.display.update()
+
+    def tilemap_setup(self):
+        tilemap = load_pygame(
+            os.path.join("vampire_survivors", "data", "maps", "world.tmx")
+        )
+        print(tilemap)
 
 
 if __name__ == "__main__":
