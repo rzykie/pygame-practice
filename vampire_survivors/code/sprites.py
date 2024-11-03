@@ -9,10 +9,9 @@ class CollisionSprite(pygame.sprite.Sprite):
     def __init__(
         self,
         position,
-        size,
+        surface,
         groups,
     ):
         super().__init__(groups)
-        self.image = pygame.Surface(size)
-        self.image.fill((10, 155, 199))
+        self.image = surface
         self.rect = self.image.get_frect(center=position)

@@ -22,18 +22,18 @@ class Game:
 
         self.tilemap_setup()
         # player
-        self.player = Player((400, 300), self.all_sprites, self.collision_sprites)
+        self.player = Player((500, 300), self.all_sprites, self.collision_sprites)
 
-        for _ in range(6):
-            posx, posy = random.randint(0, WINDOW_WIDTH), random.randint(
-                0, WINDOW_HEIGHT
-            )
-            width, height = random.randint(60, 100), random.randint(50, 100)
-            CollisionSprite(
-                (posx, posy),
-                (width, height),
-                (self.all_sprites, self.collision_sprites),
-            )
+        # for _ in range(6):
+        #     posx, posy = random.randint(0, WINDOW_WIDTH), random.randint(
+        #         0, WINDOW_HEIGHT
+        #     )
+        #     width, height = random.randint(60, 100), random.randint(50, 100)
+        #     CollisionSprite(
+        #         (posx, posy),
+        #         (width, height),
+        #         (self.all_sprites, self.collision_sprites),
+        #     )
 
     def run(self):
         while self.running:
@@ -55,7 +55,13 @@ class Game:
         tilemap = load_pygame(
             os.path.join("vampire_survivors", "data", "maps", "world.tmx")
         )
-        print(tilemap)
+        for tile in tilemap.get_layer_by_name("Objects"):
+            CollisionSprite(
+                (tile.x, tile.y), tile.image, (self.all_sprites, self.collision_sprites)
+            )
+            # print(tile.x)
+            # print(tile.y)
+            # print(tile.image)
 
 
 if __name__ == "__main__":
