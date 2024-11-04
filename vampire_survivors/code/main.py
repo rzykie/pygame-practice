@@ -6,6 +6,7 @@ from player import Player
 from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
 from sprites import CollisionSprite, GroundSprite
 from pytmx.util_pygame import load_pygame
+from groups import AllSprites
 
 
 class Game:
@@ -17,12 +18,12 @@ class Game:
         self.clock = pygame.time.Clock()
 
         # groups
-        self.all_sprites = pygame.sprite.Group()
+        self.all_sprites = AllSprites()
         self.collision_sprites = pygame.sprite.Group()
 
         self.tilemap_setup()
         # player
-        self.player = Player((500, 300), self.all_sprites, self.collision_sprites)
+        self.player = Player((700, 200), self.all_sprites, self.collision_sprites)
 
         # for _ in range(6):
         #     posx, posy = random.randint(0, WINDOW_WIDTH), random.randint(
@@ -48,7 +49,7 @@ class Game:
 
             # draw
             self.display_surface.fill((0, 0, 0))
-            self.all_sprites.draw(self.display_surface)
+            self.all_sprites.draw(self.player.rect.center)
             pygame.display.update()
 
     def tilemap_setup(self):
