@@ -8,7 +8,6 @@ class AllSprites(pygame.sprite.Group):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2()
-        # self.half_w, self.half_h = self.display_surface.get_size() // 2
 
     def draw(self, target_position):
         self.offset.x = -(target_position[0] - WINDOW_WIDTH / 2)

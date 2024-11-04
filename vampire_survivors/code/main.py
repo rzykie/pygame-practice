@@ -23,7 +23,6 @@ class Game:
 
         self.tilemap_setup()
         # player
-        self.player = Player((700, 200), self.all_sprites, self.collision_sprites)
 
         # for _ in range(6):
         #     posx, posy = random.randint(0, WINDOW_WIDTH), random.randint(
@@ -77,6 +76,20 @@ class Game:
                 pygame.Surface((collision_object.width, collision_object.height)),
                 self.collision_sprites,
             )
+
+        for marker in tilemap.get_layer_by_name("Entities"):
+            if marker.name == "Player":
+                self.player = Player(
+                    (marker.x, marker.y),
+                    self.all_sprites,
+                    self.collision_sprites,
+                )
+
+            # CollisionSprite(
+            #     (marker.x, marker.y),
+            #     pygame.Surface((marker.width, marker.height)),
+            #     self.collision_sprites,
+            # )
 
 
 if __name__ == "__main__":

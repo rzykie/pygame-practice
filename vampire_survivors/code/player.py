@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
             )
         ).convert_alpha()
         self.image = self.original_surface
-        self.rect = self.image.get_frect(center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+        self.rect = self.image.get_frect(center=position)
         self.direction = pygame.math.Vector2()
         self.speed = 800
         self.collision_sprites = collision_sprites
