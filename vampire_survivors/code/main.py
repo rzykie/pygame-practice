@@ -70,6 +70,13 @@ class Game:
                 (tile.x, tile.y), tile.image, (self.all_sprites, self.collision_sprites)
             )
 
+        for collision_object in tilemap.get_layer_by_name("Collisions"):
+            CollisionSprite(
+                (collision_object.x, collision_object.y),
+                pygame.Surface((collision_object.width, collision_object.height)),
+                self.collision_sprites,
+            )
+
 
 if __name__ == "__main__":
     game = Game()

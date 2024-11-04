@@ -14,7 +14,7 @@ class CollisionSprite(pygame.sprite.Sprite):
     ):
         super().__init__(groups)
         self.image = surface
-        self.rect = self.image.get_frect(center=position)
+        self.rect = self.image.get_frect(topleft=position)
 
 
 class GroundSprite(pygame.sprite.Sprite):
@@ -26,4 +26,4 @@ class GroundSprite(pygame.sprite.Sprite):
     ):
         super().__init__(groups)
         self.image = surface
-        self.rect = self.image.get_frect(center=position)
+        self.rect = self.image.get_frect(topleft=position)
