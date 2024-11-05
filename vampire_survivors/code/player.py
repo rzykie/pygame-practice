@@ -1,12 +1,15 @@
 import os
 
 import pygame
-from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
+from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH, walk
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, position, groups, collision_sprites):
         super().__init__(groups)
+        self.load_images()
+        self.state = "up"
+        self.frame_index = 0
         self.original_surface = pygame.image.load(
             os.path.join(
                 "vampire_survivors",
@@ -57,6 +60,38 @@ class Player(pygame.sprite.Sprite):
                     if self.direction.y < 0:
                         self.hitbox_rectangle.top = sprite.rect.bottom
 
+    def animate(self, delta_time):
+        # get state
+        if self.direction.x != 0:
+            self.state = "right" if self.direction.x > 0 else "left"
+        if self.direction.y != 0:
+            self.state = "down" if self.direction.y > 0 else "up"
+        # animate
+        self.frame_index += 5 * delta_time
+        self.image = self.frames[self.state][
+            int(self.frame_index) % len(self.frames[self.state])
+        ]
+
     def update(self, delta_time):
         self.input()
         self.movement(delta_time)
+        self.animate(delta_time)
+
+    def load_images(self):
+        self.frames = {
+            "up": [],
+            "down": [],
+            "left": [],
+            "right": [],
+        }
+
+        for state in self.frames.keys():
+            for folder_path, sub_folders, file_names in walk(
+                os.path.join("vampire_survivors", "images", "player", state)
+            ):
+                for file_name in sorted(
+                    file_names, key=lambda name: int(name.split(".")[0])
+                ):
+                    full_path = os.path.join(folder_path, file_name)
+                    surface = pygame.image.load(full_path).convert_alpha()
+                    self.frames[state].append(surface)
