@@ -19,9 +19,9 @@ class Player(pygame.sprite.Sprite):
         self.image = self.original_surface
         self.rect = self.image.get_frect(center=position)
         self.direction = pygame.math.Vector2()
-        self.speed = 800
+        self.speed = 500
         self.collision_sprites = collision_sprites
-        self.hitbox_rectangle = self.rect.inflate(-60, -5)
+        self.hitbox_rectangle = self.rect.inflate(-60, -90)
 
         # mask
         self.player_mask = pygame.mask.from_surface(self.image)

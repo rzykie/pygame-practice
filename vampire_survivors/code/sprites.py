@@ -27,3 +27,4 @@ class GroundSprite(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image = surface
         self.rect = self.image.get_frect(topleft=position)
+        self.ground = True
