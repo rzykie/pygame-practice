@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
         if self.direction.y != 0:
             self.state = "down" if self.direction.y > 0 else "up"
         # animate
-        self.frame_index += 5 * delta_time
+        self.frame_index = self.frame_index + 5 * delta_time if self.direction else 0
         self.image = self.frames[self.state][
             int(self.frame_index) % len(self.frames[self.state])
         ]
