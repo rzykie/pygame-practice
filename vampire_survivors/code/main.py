@@ -4,7 +4,7 @@ import random
 import pygame
 from player import Player
 from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
-from sprites import CollisionSprite, GroundSprite
+from sprites import CollisionSprite, GroundSprite, GunSprite
 from pytmx.util_pygame import load_pygame
 from groups import AllSprites
 
@@ -84,6 +84,7 @@ class Game:
                     self.all_sprites,
                     self.collision_sprites,
                 )
+                self.gun = GunSprite(self.player, self.all_sprites)
 
             # CollisionSprite(
             #     (marker.x, marker.y),
