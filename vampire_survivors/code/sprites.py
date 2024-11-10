@@ -55,7 +55,15 @@ class GunSprite(pygame.sprite.Sprite):
             center=self.player.rect.center + self.player_direction * self.distance
         )
 
+    def get_direction(self):
+        mouse_position = pygame.Vector2(pygame.mouse.get_pos())
+        player_position = pygame.Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+        self.player_direction = (mouse_position - player_position).normalize()
+        # print(self.player_direction)
+
     def update(self, _):
+        self.get_direction()
+        self.rotate_gun()
         self.rect.center = (
             self.player.rect.center + self.player_direction * self.distance
         )
