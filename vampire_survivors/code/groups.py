@@ -1,3 +1,4 @@
+import os
 import pygame
 
 from settings import TILE_SIZE, WINDOW_HEIGHT, WINDOW_WIDTH
@@ -21,3 +22,9 @@ class AllSprites(pygame.sprite.Group):
                 self.display_surface.blit(
                     sprite.image, sprite.rect.topleft + self.offset
                 )
+
+
+class BulletGroup(pygame.sprite.Group):
+    def __init__(self):
+        super().__init__()
+        self.display_surface = pygame.display.get_surface()

@@ -92,3 +92,18 @@ class GunSprite(pygame.sprite.Sprite):
         self.rect.center = (
             self.player.rect.center + self.player_direction * self.distance
         )
+
+
+class BulletSprite(pygame.sprite.Sprite):
+    def __init__(
+        self,
+        surface,
+        position,
+        direction,
+        groups,
+    ):
+        super().__init__(groups)
+        self.image = surface
+        self.rect = self.image.get_frect(center=position)
+        self.direction = direction
+        self.speed = 200
