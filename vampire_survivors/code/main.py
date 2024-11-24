@@ -118,6 +118,20 @@ class Game:
 
         if mouse_click[0]:
             self.auto_shoot_button_ui.toggle_button(mouse_position=mouse_position)
+
+        # Auto shoot
+        if self.auto_shoot_button_ui.button_active and self.can_shoot:
+            bullet_position = self.gun.rect.center + self.gun.player_direction * 50
+            BulletSprite(
+                self.bullet_surface,
+                bullet_position,
+                self.gun.player_direction,
+                (self.all_sprites, self.bullet_sprites),
+            )
+            self.can_shoot = False
+            self.shoot_timer = pygame.time.get_ticks()
+
+        # Manual shooting
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.can_shoot:
             bullet_position = self.gun.rect.center + self.gun.player_direction * 50
