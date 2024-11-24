@@ -129,7 +129,6 @@ class Game:
             )
             self.can_shoot = False
             self.shoot_timer = pygame.time.get_ticks()
-            print("shoot")
 
     def gun_timer(self):
         if not self.can_shoot:

@@ -106,4 +106,13 @@ class BulletSprite(pygame.sprite.Sprite):
         self.image = surface
         self.rect = self.image.get_frect(center=position)
         self.direction = direction
-        self.speed = 200
+        self.speed = 1000
+
+        self.spawn_timer = pygame.time.get_ticks()
+        self.lifetime = 1000
+
+    def update(self, delta_time):
+        self.rect.center += self.direction * self.speed * delta_time
+
+        if pygame.time.get_ticks() - self.spawn_timer >= self.lifetime:
+            self.kill()
